@@ -1,0 +1,101 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["install", "@milkdown/crepe", "@milkdown/plugin-upload", "marked", "electron", "electron-builder", "vite", "--save-dev"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Vite Dev Server",
+      "type": "shell",
+      "command": "npx",
+      "args": ["vite"],
+      "group": "build",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": {
+          "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*building for development.*",
+          "endsPattern": ".*Local:.*"
+        }
+      }
+    },
+    {
+      "label": "Start Electron Dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "electron:dev"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Electron App",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "electron:build"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Development Mode (Both Servers)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Start Vite Dev Server",
+        "Start Electron Dev"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Clean Build",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "if exist dist rmdir /s /q dist && if exist electron-dist rmdir /s /q electron-dist"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -45,18 +45,18 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@milkdown/core": "^7.0.0",
-    "@milkdown/crepe": "^7.8.0",
-    "@milkdown/plugin-history": "^7.0.0",
-    "@milkdown/plugin-upload": "^7.9.0",
-    "@milkdown/preset-commonmark": "^7.0.0",
-    "@milkdown/theme-nord": "^7.8.0",
+    "@milkdown/core": "^7.15.1",
+    "@milkdown/crepe": "^7.15.1",
+    "@milkdown/plugin-history": "^7.15.1",
+    "@milkdown/plugin-upload": "^7.15.1",
+    "@milkdown/preset-commonmark": "^7.15.1",
+    "@milkdown/theme-nord": "^7.15.1",
     "electron-bundler": "^0.0.0-alpha.0.0",
-    "marked": "^15.0.8"
+    "marked": "^16.0.0"
   },
   "devDependencies": {
-    "electron": "^26.6.10",
-    "electron-builder": "^24.13.3",
-    "vite": "^4.5.13"
+    "electron": "^37.2.1",
+    "electron-builder": "^26.0.12",
+    "vite": "^7.0.4"
   }
 }
