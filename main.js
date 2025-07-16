@@ -1,5 +1,5 @@
 // main.js
-const { app, BrowserWindow, ipcMain, globalShortcut, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -47,25 +47,24 @@ function createWindow() {
     }
   });
 
-  // Register global shortcuts
-  globalShortcut.register('CommandOrControl+N', () => {
-    mainWindow.webContents.send('trigger-new');
-  });
-
-  globalShortcut.register('CommandOrControl+O', () => {
-    mainWindow.webContents.send('trigger-open');
-  });
-
-  globalShortcut.register('CommandOrControl+S', () => {
-    mainWindow.webContents.send('trigger-save');
-  });
-
-  globalShortcut.register('CommandOrControl+Shift+S', () => {
-    mainWindow.webContents.send('trigger-save-as');
-  });
-
-  globalShortcut.register('CommandOrControl+W', () => {
-    mainWindow.webContents.send('trigger-close');
+  // Register local shortcuts (only work when app has focus)
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.type === 'keyDown') {
+      const { control, meta, shift, key } = input;
+      const cmdOrCtrl = control || meta;
+      
+      if (cmdOrCtrl && !shift && key.toLowerCase() === 'n') {
+        mainWindow.webContents.send('trigger-new');
+      } else if (cmdOrCtrl && !shift && key.toLowerCase() === 'o') {
+        mainWindow.webContents.send('trigger-open');
+      } else if (cmdOrCtrl && !shift && key.toLowerCase() === 's') {
+        mainWindow.webContents.send('trigger-save');
+      } else if (cmdOrCtrl && shift && key.toLowerCase() === 's') {
+        mainWindow.webContents.send('trigger-save-as');
+      } else if (cmdOrCtrl && !shift && key.toLowerCase() === 'w') {
+        mainWindow.webContents.send('trigger-close');
+      }
+    }
   });
 
   mainWindow.on('closed', () => {
@@ -288,5 +287,5 @@ app.on('activate', () => {
 });
 
 app.on('will-quit', () => {
-  globalShortcut.unregisterAll();
+  // No global shortcuts to unregister anymore
 });
